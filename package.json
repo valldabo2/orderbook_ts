@@ -13,7 +13,7 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
-    "tests": "mocha --require ts-node/register test/**/*.ts",
+    "test": "mocha --require ts-node/register test/**/*.ts",
     "speed_test": "npx ts-node speed_test/orderbook.ts"
   },
   "name": "orderbook_ts",
