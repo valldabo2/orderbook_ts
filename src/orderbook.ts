@@ -9,13 +9,13 @@ export class OrderBook {
     orders = new Map<string, LimitOrder>();
 
     cancel(id: string) {
-        let o = this.orders.get(id);
+        const o = this.orders.get(id);
         if (o.side == OrderSide.Buy){
             var levels = this.bid_levels;
         } else {
             var levels = this.ask_levels;
         }
-        let pl = levels.priceLevel(o.price);
+        const pl = levels.priceLevel(o.price);
 
         pl.remove(id);
         if (pl.empty){
@@ -44,11 +44,11 @@ export class OrderBook {
 
     place(o: LimitOrder): LinkedList<LimitOrder> {
         var o: LimitOrder = {...o};
-        let matched_orders = new LinkedList<LimitOrder>();
+        const matched_orders = new LinkedList<LimitOrder>();
         while (this.more_to_match(o)) {
-            let pl = this.matching_price_level(o);
-            let next_match = pl.first;
-            let matched = this.match_order(o, next_match, pl);
+            const pl = this.matching_price_level(o);
+            const next_match = pl.first;
+            const matched = this.match_order(o, next_match, pl);
             matched_orders.append(matched);
             o.size -= matched.size
         }
