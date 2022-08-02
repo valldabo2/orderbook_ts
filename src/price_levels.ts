@@ -1,5 +1,5 @@
 import { PriceLevel } from "./price_level";
-import { LimitOrder, OrderSide } from "./limit_order";
+import { LimitOrder } from "./limit_order";
 import BTree  from 'sorted-btree';
 
 export class PriceLevels {
@@ -29,7 +29,7 @@ export class PriceLevels {
         if (this.levels.has(o.price)){
             this.levels.get(o.price).add(o);
         } else {
-            var pl = new PriceLevel();
+            const pl = new PriceLevel();
             pl.add(o);
             this.levels.set(o.price, pl);
         }

@@ -4,7 +4,7 @@ import { LimitOrder } from './limit_order';
 export class PriceLevel {
     ol = new LinkedList<LimitOrder>();
     om = new Map<string, LimitOrder>();
-    public size: number = 0;
+    public size = 0;
 
     get empty(): boolean {
         return this.length == 0;
@@ -29,7 +29,7 @@ export class PriceLevel {
 
     remove(id: string) {
         if (this.om.has(id)) {
-            let o = this.om.get(id);
+            const o = this.om.get(id);
             this.size -= o.size;
             this.om.delete(id);
             if (this.ol.length == 1){

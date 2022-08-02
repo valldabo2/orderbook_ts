@@ -10,10 +10,12 @@ export class OrderBook {
 
     cancel(id: string) {
         const o = this.orders.get(id);
+        let levels: PriceLevels;
+
         if (o.side == OrderSide.Buy){
-            var levels = this.bid_levels;
+            levels = this.bid_levels;
         } else {
-            var levels = this.ask_levels;
+            levels = this.ask_levels;
         }
         const pl = levels.priceLevel(o.price);
 
@@ -42,8 +44,8 @@ export class OrderBook {
         return false;
     }
 
-    place(o: LimitOrder): LinkedList<LimitOrder> {
-        var o: LimitOrder = {...o};
+    place(o_in: LimitOrder): LinkedList<LimitOrder> {
+        const o: LimitOrder = {...o_in};
         const matched_orders = new LinkedList<LimitOrder>();
         while (this.more_to_match(o)) {
             const pl = this.matching_price_level(o);
@@ -69,13 +71,14 @@ export class OrderBook {
 
     private match_order(o: LimitOrder, next_match: LimitOrder, pl: PriceLevel): LimitOrder {
         // More or same on order than next order in book
+        let match: LimitOrder;
         if (o.size >= next_match.size) {
             pl.remove(next_match.id);
             this.orders.delete(next_match.id);
-            var match: LimitOrder = {...next_match};
+            match = {...next_match};
         // Less on order than next order in book
         } else if (o.size < next_match.size) {
-            var match: LimitOrder = { price: next_match.price, size: o.size, id: next_match.id, side: next_match.side };
+            match = { price: next_match.price, size: o.size, id: next_match.id, side: next_match.side };
             next_match.size -= o.size;
             pl.size -= o.size;
         }
